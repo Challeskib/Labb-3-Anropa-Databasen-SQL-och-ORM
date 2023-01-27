@@ -9,18 +9,20 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM.Models
     {
         public SchoolDbContext()
         {
+
         }
 
         public SchoolDbContext(DbContextOptions<SchoolDbContext> options)
             : base(options)
         {
+
         }
 
         public virtual DbSet<Course> Courses { get; set; } = null!;
         public virtual DbSet<Grade> Grades { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
         public virtual DbSet<Teacher> Teachers { get; set; } = null!;
-        public virtual DbSet<staff> staff { get; set; } = null!;
+        public virtual DbSet<Staff> Staff { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -99,7 +101,7 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM.Models
                     .HasConstraintName("FK_Teacher_Staff");
             });
 
-            modelBuilder.Entity<staff>(entity =>
+            modelBuilder.Entity<Staff>(entity =>
             {
                 entity.ToTable("Staff");
 
