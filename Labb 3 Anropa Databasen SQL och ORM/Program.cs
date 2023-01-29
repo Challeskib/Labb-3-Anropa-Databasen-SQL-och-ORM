@@ -67,6 +67,7 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
         {
             SchoolDbContext context = new SchoolDbContext();
 
+            //Deklarerar all studenter som har StudentId
             var allStudents = context.Students
                 .Where(p => p.StudentId > 0);
 
@@ -76,7 +77,7 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
             Console.WriteLine("Sort by ascending (1) or descending (2) order?");
             int sortOrder = Convert.ToInt32(Console.ReadLine());
 
-
+            //Switch meny som bestämmer hur allStudents skall sorteras
             switch (sortBy)
             {
                 case 1:
@@ -116,7 +117,7 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
 
 
             }
-            foreach (Student item in allStudents)
+            foreach (Student item in allStudents) //loopar genom allStudents med sorteringarna som användaren valde innan
             {
                 Console.WriteLine($"{item.StudentId}. {item.FirstName} {item.LastName} | PersonalId: {item.PersonalId}" +
                     $" | Adress: {item.Adress} | City: {item.City} | Phone: {item.City} | Email: {item.Email}");
@@ -124,16 +125,8 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
 
         }
 
-        public static void GetStudentsOfClass()
+        public static void PrintAllClasses()
         {
-            SchoolDbContext context = new SchoolDbContext();
-
-            Console.WriteLine("Sort by first name (1) or last name (2)?");
-            int sortBy = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("Sort by ascending (1) or descending (2) order?");
-            int sortOrder = Convert.ToInt32(Console.ReadLine());
-
             var allClasses = context.Students
                 .Where(p => p.StudentId > 0)
                 .OrderBy(p => p.Class);
@@ -150,6 +143,18 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
                     Console.WriteLine($"{lastItem.Class}");
                 }
             }
+
+        }
+
+        public static void GetStudentsOfClass()
+        {
+            SchoolDbContext context = new SchoolDbContext();
+
+            Console.WriteLine("Sort by first name (1) or last name (2)?");
+            int sortBy = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Sort by ascending (1) or descending (2) order?");
+            int sortOrder = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine("\nWhich class do you want to view?");
             string selectedClass = Console.ReadLine();
