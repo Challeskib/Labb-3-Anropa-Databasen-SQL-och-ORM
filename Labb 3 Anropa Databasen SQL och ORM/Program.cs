@@ -127,6 +127,8 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
 
         public static void PrintAllClasses()
         {
+            SchoolDbContext context = new SchoolDbContext();
+
             var allClasses = context.Students
                 .Where(p => p.StudentId > 0)
                 .OrderBy(p => p.Class);
@@ -153,8 +155,10 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
             Console.WriteLine("Sort by first name (1) or last name (2)?");
             int sortBy = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("Sort by ascending (1) or descending (2) order?");
+            Console.WriteLine("Sort students by ascending (1) or descending (2) order?");
             int sortOrder = Convert.ToInt32(Console.ReadLine());
+
+            PrintAllClasses();
 
             Console.WriteLine("\nWhich class do you want to view?");
             string selectedClass = Console.ReadLine();
@@ -162,6 +166,7 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
             var studentsInClass = context.Students
                 .Where(p => p.Class == selectedClass);
 
+            //Switch meny som bestämmer hur studenterna skall sorteras
             switch (sortBy)
             {
                 case 1:
@@ -213,6 +218,7 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
         {
             SchoolDbContext context = new SchoolDbContext();
 
+            //Skapar nytt objekt av Staff
             Staff newStaff = new Staff()
             {
                 FirstName = "",
@@ -225,6 +231,7 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
                 Position = "",
             };
 
+            //user får bestämma:
             Console.WriteLine("Enter first name: ");
             newStaff.FirstName = Console.ReadLine();
             Console.WriteLine("Enter last name: ");
@@ -240,6 +247,7 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
             Console.WriteLine("Enter email: ");
             newStaff.Email = Console.ReadLine();
 
+            //add objektet till DbContext och sen spara
             context.Staff.Add(newStaff);
             context.SaveChanges();
             Console.WriteLine("New staff member added successfully.");
@@ -250,9 +258,11 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
         {
             SchoolDbContext context = new SchoolDbContext();
 
+            //Spara alla staff med StaffId > 0 i allStaff
             var allStaff = context.Staff
                 .Where(p => p.StaffId > 0);
 
+            //Print all staff
             foreach (Staff item in allStaff)
             {
                 Console.WriteLine($"{item.StaffId}. {item.FirstName} {item.LastName} | PersonalId: {item.PersonalId}" +
