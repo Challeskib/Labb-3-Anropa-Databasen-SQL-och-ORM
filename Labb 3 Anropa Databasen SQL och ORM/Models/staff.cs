@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Labb_3_Anropa_Databasen_SQL_och_ORM.Models
 {
-    public partial class staff
+    public partial class Staff
     {
-        public staff()
+        public Staff()
         {
             Teachers = new HashSet<Teacher>();
         }
