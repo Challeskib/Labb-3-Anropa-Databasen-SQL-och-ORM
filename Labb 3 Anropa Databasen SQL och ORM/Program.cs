@@ -7,7 +7,10 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
     {
         static void Main(string[] args)
         {
-            SchoolDbContext context = new SchoolDbContext();
+            RunProgram();
+            
+            
+            //SchoolDbContext context = new SchoolDbContext();
 
             // 1:
             //Hämta alla elever (ska lösas med Entity framwork)
@@ -32,21 +35,21 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
             Extra utmaning: låt användaren även få välja sortering på eleverna som i punkten ovan.
             */
 
-            var allClasses = context.Students
-                .Where(p => p.StudentId > 0)
-                .OrderBy(p => p.Class);
+            //var allClasses = context.Students
+            //    .Where(p => p.StudentId > 0)
+            //    .OrderBy(p => p.Class);
 
-            Student lastItem = new Student();
+            //Student lastItem = new Student();
 
-            //Skriver ut alla existerande klasser
-            foreach (Student item in allClasses)
-            {
-                if (lastItem.Class != item.Class)
-                {
-                    lastItem = item;
-                    Console.WriteLine($"klasser: {lastItem.Class} ");
-                }
-            }
+            ////Skriver ut alla existerande klasser
+            //foreach (Student item in allClasses)
+            //{
+            //    if (lastItem.Class != item.Class)
+            //    {
+            //        lastItem = item;
+            //        Console.WriteLine($"klasser: {lastItem.Class} ");
+            //    }
+            //}
 
 
             /*
@@ -71,5 +74,53 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
             //context.SaveChanges();
 
         }
+
+        public static void RunProgram()
+        {
+            RunMenu();
+
+        }
+
+        public static void RunMenu()
+        {
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1. List all students");
+            Console.WriteLine("2. List all students of a certain class");
+            Console.WriteLine("3. Add new staff");
+
+            int choice = Convert.ToInt32(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    GetAllStudents();
+                    break;
+                case 2:
+                    Console.WriteLine("You chose Option 2");
+                    break;
+                case 3:
+                    Console.WriteLine("You chose Option 3");
+                    break;
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
+            }
+        }
+
+        public static void GetAllStudents()
+        {
+            SchoolDbContext context = new SchoolDbContext();
+
+            var allStudents = context.Students
+                .Where(p => p.StudentId > 0)
+                .OrderBy(p => p.FirstName);
+
+            foreach (Student item in allStudents)
+            {
+                Console.WriteLine($"Name: {item.FirstName} {item.LastName}");
+            }
+
+        }
+
     }
 }
