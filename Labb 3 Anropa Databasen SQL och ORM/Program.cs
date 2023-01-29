@@ -8,8 +8,8 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
         static void Main(string[] args)
         {
             RunProgram();
-            
-            
+
+
             //SchoolDbContext context = new SchoolDbContext();
 
             // 1:
@@ -111,16 +111,65 @@ namespace Labb_3_Anropa_Databasen_SQL_och_ORM
         {
             SchoolDbContext context = new SchoolDbContext();
 
-            var allStudents = context.Students
-                .Where(p => p.StudentId > 0)
-                .OrderBy(p => p.FirstName);
+            //var allStudents = context.Students
+            //    .Where(p => p.StudentId > 0)
+            //    .OrderBy(p => p.FirstName);
 
+
+            var allStudents = context.Students
+                .Where(p => p.StudentId > 0);
+
+            Console.WriteLine("Sort by first name (1) or last name (2)?");
+            int sortBy = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Sort by ascending (1) or descending (2) order?");
+            int sortOrder = Convert.ToInt32(Console.ReadLine());
+
+
+            switch (sortBy)
+            {
+                case 1:
+                    switch (sortOrder)
+                    {
+                        case 1:
+                            allStudents = allStudents.OrderBy(p => p.FirstName);
+                            break;
+                        case 2:
+                            allStudents = allStudents.OrderByDescending(p => p.FirstName);
+                            break;
+                        default:
+                            Console.WriteLine("Invalid option. Sorting by ascending order by default.");
+                            allStudents = allStudents.OrderBy(p => p.FirstName);
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (sortOrder)
+                    {
+                        case 1:
+                            allStudents = allStudents.OrderBy(p => p.LastName);
+                            break;
+                        case 2:
+                            allStudents = allStudents.OrderByDescending(p => p.LastName);
+                            break;
+                        default:
+                            Console.WriteLine("Invalid option. Sorting by ascending order by default.");
+                            allStudents = allStudents.OrderBy(p => p.LastName);
+                            break;
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Invalid option. Sorting by first name in ascending order by default.");
+                    allStudents = allStudents.OrderBy(p => p.FirstName);
+                    break;
+
+
+            }
             foreach (Student item in allStudents)
             {
                 Console.WriteLine($"Name: {item.FirstName} {item.LastName}");
             }
 
         }
-
     }
 }
